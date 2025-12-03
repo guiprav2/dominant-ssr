@@ -6,5 +6,5 @@ let toggle = false;
 document.body.append(d.if(() => toggle, d.el('div', 'Hello')));
 console.log(document.body.outerHTML);
 toggle = true;
-d.updateSync();
+await d.updateSync();
 console.log(document.body.outerHTML);

@@ -1073,7 +1073,8 @@ function update() {
 
 update.promiseCallbacks = [];
 
-function updateSync(di) {
+async function updateSync(di) {
+  if (d.happy) await Promise.resolve();
   di = di || {};
   di.boundNodes = di.boundNodes || boundNodes;
   di.updateNode = di.updateNode || updateNode;

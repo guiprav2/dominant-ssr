@@ -10,7 +10,7 @@ export default class MutationObserverListener {
     #callback;
     #records = [];
     #destroyed = false;
-    #timeout = null;
+    #microtaskQueued = false;
     /**
      * Constructor.
      *
@@ -42,10 +42,12 @@ export default class MutationObserverListener {
             return;
         }
         this.#records.push(record);
-        if (this.#timeout) {
-            this.#window.clearTimeout(this.#timeout);
+        if (this.#microtaskQueued) {
+            return;
         }
-        this.#timeout = this.#window.setTimeout(() => {
+        this.#microtaskQueued = true;
+        this.#window.queueMicrotask(() => {
+            this.#microtaskQueued = false;
             if (this.#destroyed) {
                 return;
             }
@@ -60,9 +62,6 @@ export default class MutationObserverListener {
      * Destroys the listener.
      */
     takeRecords() {
-        if (this.#timeout) {
-            this.#window.clearTimeout(this.#timeout);
-        }
         if (this.#destroyed) {
             return [];
         }
@@ -77,9 +76,6 @@ export default class MutationObserverListener {
         if (this.#destroyed) {
             return;
         }
-        if (this.#timeout) {
-            this.#window.clearTimeout(this.#timeout);
-        }
         this.#destroyed = true;
         this.options = null;
         this.target = null;
@@ -87,7 +83,7 @@ export default class MutationObserverListener {
         this.#window = null;
         this.#observer = null;
         this.#callback = null;
-        this.#timeout = null;
+        this.#microtaskQueued = false;
         this.#records = null;
     }
 }
