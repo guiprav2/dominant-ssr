@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-ws": "^5.0.2",
+    "happy-dom": "^20.0.11",
+    "linkedom": "^0.18.12"
+  }
+}

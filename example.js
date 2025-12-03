@@ -1,0 +1,10 @@
+import { Window } from './happy-dom/lib/index.js';
+globalThis.window = new Window();
+for (let x of ['MutationObserver', 'Node', 'document']) globalThis[x] = window[x];
+let d = (await import('./dominant.js')).default;
+let toggle = false;
+document.body.append(d.if(() => toggle, d.el('div', 'Hello')));
+console.log(document.body.outerHTML);
+toggle = true;
+d.updateSync();
+console.log(document.body.outerHTML);

@@ -1,5 +1,6 @@
 'use strict';
 
+let window = globalThis;
 let exports = (window.d = {});
 var boundNodes = [];
 var ieNodes = navigator.userAgent.indexOf('Trident') ? [] : null;
