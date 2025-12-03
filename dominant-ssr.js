@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import d from './dominant.js';
-import { Window } from './happy-dom/lib/index.js';
+import { Window } from 'happy-dom';
 export let live = {};
 export default app => {
   app.ws('/ssr/:id', (ws, req) => {
